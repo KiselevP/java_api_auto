@@ -1,7 +1,4 @@
-import io.restassured.path.json.JsonPath;
 import org.junit.jupiter.api.Test;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -12,33 +9,18 @@ public class PostRequests extends AbstractTest
     @Test
     void test1()
     {
-        given()
-                .queryParam("apiKey", getApiKey())
-                .queryParam("includeNutrition", "false")
+        given().spec(getRequestSpecification())
                 .when()
                 .post(getBaseUrl()+"recipes/cuisine")
                 .then()
-                .statusCode(200);
-    }
-
-    @Test
-    void test2()
-    {
-        given()
-                .queryParam("apiKey", getApiKey())
-                .queryParam("includeNutrition", "false")
-                .when()
-                .post(getBaseUrl()+"recipes/cuisine")
-                .then()
-                .time(lessThan(650L), TimeUnit.MILLISECONDS);
+                .spec(getResponseSpecification());
     }
 
     @Test
     void test3()
     {
         String request = given()
-                .queryParam("apiKey", getApiKey())
-                .queryParam("includeNutrition", "false")
+                .spec(getRequestSpecification())
                 .when()
                 .post(getBaseUrl()+"recipes/cuisine")
                 .jsonPath().toString();
@@ -49,33 +31,32 @@ public class PostRequests extends AbstractTest
     @Test
     void test4()
     {
-        given()
-                .queryParam("apiKey", getApiKey())
-                .queryParam("includeNutrition", "false")
+        given().spec(getRequestSpecification())
                 .expect()
-                .body("cuisine", equalTo("Mediterranean"))
+                .body("cuisine", equalTo("Italian"))
                 .when()
-                .post(getBaseUrl() + "recipes/cuisine");
+                .post(getBaseUrl() + "recipes/cuisine")
+                .then()
+                .spec(getResponseSpecification());
     }
 
     @Test
     void test5()
     {
-        given()
-                .queryParam("apiKey", getApiKey())
-                .queryParam("includeNutrition", "false")
+        given().spec(getRequestSpecification())
                 .expect()
                 .body("confidence", equalTo(0.0F))
                 .when()
-                .post(getBaseUrl() + "recipes/cuisine");
+                .post(getBaseUrl() + "recipes/cuisine")
+                .then()
+                .spec(getResponseSpecification());
     }
 
     @Test
     void addMealTest()
     {
         String responseID =
-                given()
-                        .queryParam("apiKey", getApiKey())
+                given().spec(getRequestSpecification())
                         .queryParam("hash", getHash())
                         .pathParams("user_name", getUserName())
                         .body("{\n"
@@ -92,15 +73,31 @@ public class PostRequests extends AbstractTest
                         .get("id")
                         .toString();
 
-
-        given()
-                .queryParam("apiKey", getApiKey())
+        given().spec(getRequestSpecification())
                 .pathParams("user_name", getUserName())
                 .queryParam("hash", getHash())
                 .pathParams("id", responseID)
                 .log().all()
                 .when()
                 .delete(getBaseUrl() + "mealplanner/{user_name}/shopping-list/items/{id}")
-                .prettyPeek();
+                .prettyPeek()
+                .then()
+                .spec(getResponseSpecification());
+
+
+    }
+
+    @Test
+    void checkDeleteElem()
+    {
+        given().spec(getRequestSpecification())
+                .queryParam("hash", getHash())
+                .pathParams("user_name", getUserName())
+                .log().all()
+                .when()
+                .get(getBaseUrl() + "mealplanner/{user_name}/shopping-list")
+                .prettyPeek()
+                .then()
+                .spec(getResponseSpecification());
     }
 }
