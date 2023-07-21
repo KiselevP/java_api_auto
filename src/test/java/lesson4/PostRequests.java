@@ -2,6 +2,8 @@ package lesson4;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -95,6 +97,8 @@ public class PostRequests extends AbstractTest
         given().spec(getRequestSpecification())
                 .queryParam("hash", getHash())
                 .pathParams("user_name", getUserName())
+                .expect()
+                .body("cost", equalTo(0.0F))
                 .log().all()
                 .when()
                 .get(getBaseUrl() + "mealplanner/{user_name}/shopping-list")
