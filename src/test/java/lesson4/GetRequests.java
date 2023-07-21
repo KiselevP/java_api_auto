@@ -1,3 +1,5 @@
+package lesson4;
+
 import io.restassured.path.json.JsonPath;
 import org.junit.jupiter.api.Test;
 
