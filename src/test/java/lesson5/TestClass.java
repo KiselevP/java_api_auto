@@ -46,11 +46,10 @@ public class TestClass extends AbstractTestClass {
         assertThat(response.isSuccessful(), CoreMatchers.is(true));
     }
 
-    /*не понял, что с ним делать*/
     @SneakyThrows
     @Test
     void modifyProductTest() {
-        Response<ProductDto> response = getProductService().modifyProduct(getProduct())
+        Response<ProductDto> response = getProductService().modifyProduct(getProduct().withId(1))
                 .execute();
         assertThat(response.isSuccessful(), CoreMatchers.is(true));
     }
