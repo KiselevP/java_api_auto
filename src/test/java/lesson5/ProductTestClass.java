@@ -1,6 +1,5 @@
 package lesson5;
 
-import lesson5.dto.CategoryDto;
 import lesson5.dto.ProductDto;
 import lombok.SneakyThrows;
 import okhttp3.ResponseBody;
@@ -9,18 +8,8 @@ import org.junit.jupiter.api.Test;
 import retrofit2.Response;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 
-public class TestClass extends AbstractTestClass {
-    @SneakyThrows
-    @Test
-    void getCategoryByIdTest() {
-        Response<CategoryDto> response = getCategoryService().getCategory(1).execute();
-
-        assertThat(response.isSuccessful(), CoreMatchers.is(true));
-        assertThat(response.body().getId(), equalTo(1));
-        assertThat(response.body().getTitle(), equalTo("Food"));
-    }
+public class ProductTestClass extends AbstractTestClass {
 
     @SneakyThrows
     @Test

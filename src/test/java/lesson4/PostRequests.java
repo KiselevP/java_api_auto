@@ -2,8 +2,6 @@ package lesson4;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
