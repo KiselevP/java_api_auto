@@ -10,13 +10,13 @@
                 <property name="driver" value="org.postgresql.Driver"/>
                 <property name="url"
                           value="jdbc:postgresql://127.0.0.1:5432/postgres"/>
-                <property name="username" value="test"/>
+                <property name="username" value="postgres"/>
                 <property name="password" value="1"/>
             </dataSource>
         </environment>
     </environments>
     <mappers>
-        <mapper resource="lesson6\mapper\xml\CategoriesMapper.xml"/>
-        <mapper resource="lesson6\mapper\xml\ProductsMapper.xml"/>
+        <mapper resource="lesson6\mapper\CategoriesMapper.xml"/>
+        <mapper resource="lesson6\mapper\ProductsMapper.xml"/>
     </mappers>
 </configuration>
